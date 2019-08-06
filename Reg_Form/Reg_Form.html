@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>JavaScript Form Validation using a sample registration form</title>
+<style>
+	body {background-color: rgb(230, 234, 250);}
+    h1   {color: black;}
+    p    {color: blue;}
+    </style>
+	<link rel='stylesheet' href='Reg_Form.css' type='text/css' />
+
+<script src="Reg_Form.js"></script>
+
+</head>
+
+<body onload="document.registration.userid.focus();">
+
+<h1>Registration Form</h1>
+Use tab keys to move from one input field to the next.
+
+<form name='registration' onSubmit="return formValidation();">
+<ul>
+
+<li><label for="userid">BITS ID:</label></li>
+<input type="text" name="userid" size="12" />
+
+<li><label for="passid">Password:</label></li>
+<input type="password" name="passid" size="12" />
+
+<li><label for="username">Name:</label></li>
+<input type="text" name="username" size="50" />
+
+<li><label for="contact no.">Contact Number</label></li>
+<input type="number" name="contact" size="12"/>
+
+<li><label for="country">Country:</label></li>
+<select name="country">
+<option selected="" value="Default">(Please select a country)</option>
+<option value="AF">Australia</option>
+<option value="AL">Canada</option>
+<option value="DZ">India</option>
+<option value="AS">Russia</option>
+<option value="AD">USA</option>
+</select>
+
+<li><label for="age">Age:</label></li>
+<input type="number" name="age" min="1" max="27" required oninvalid=alert('only for below 27 years of age') />
+
+<li><label for="email">Email:</label></li>
+<input type="text" name="email" size="50" />
+
+<li><label id="gender">Gender:</label></li>
+<input type="radio" name="msex" value="Male" /><span>Male</span>
+<input type="radio" name="fsex" value="Female" /><span>Female</span>
+
+<li>Skills:</li>
+ <select name="Skills">
+  <option value="Coding"><i>Coding</i></option>
+  <option value="Front-end"><i>Front -end</i></option>
+  <option value="ML"><i>Machine Learning</i></option>
+  <option value="Back-end"><i>Back-end</i></option>
+  </select>
+
+ <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+
+<input type="submit" value="SUBMIT" />
+      <input type="reset" value="CANCEL" />
+</ul>
+</form>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+  <link rel="stylesheet" href="Flowy.css" type="text/css">
+ </head>
+
+<body>
+
+<input type="checkbox" id="myInput">
+<label for="myInput">
+    <span class="bar top"></span>
+    <span class="bar middle"></span>
+    <span class="bar bottom"></span>
+  </label>
+<aside>
+  <div class="aside-section aside-left">
+    <div class="aside-content">
+      <p><strong> Some text that will make you click the cta</strong> </p>
+    </div>
+  </div>
+
+  </div>
+</aside>
+</main>
+
+
+
+<script type="vertex" id="vs">
+        #version 300 es
+
+        uniform vec2 u_mouse;
+
+        layout (location=0) in vec3 aPosition;
+        layout (location=1) in vec3 aVelocity;
+        layout (location=2) in float mass;
+
+        out vec3 vPosition;
+        out vec3 vVelocity;
+
+        void main() {
+            vec3 position = aPosition;
+            vec3 velocity = aVelocity;
+            vec3 vmouse = vec3(u_mouse.xy, u_mouse.x);
+            vec3 acceleration =  vmouse - aPosition;
+            float dist = distance(acceleration, vmouse);
+            float gravity = (0.000997 * mass) / (dist * dist / 0.24);
+            acceleration *= gravity;
+            velocity += acceleration;
+            velocity *= 0.96;
+            vPosition = position + velocity;
+            vVelocity = velocity;
+            gl_PointSize = mass;
+            gl_Position = vec4(aPosition, 1.0);
+        }
+    </script>
+    <script type="fragment" id="fs">
+        #version 300 es
+        precision highp float;
+        float density = 2.0;
+        const float LOG2 = 1.442695;
+        // https://www.geeks3d.com/20100228/fog-in-glsl-webgl/
+        out vec4 fragColor;
+        void main() {
+            float z = gl_FragCoord.z / gl_FragCoord.w;
+            float fogFactor = exp2(-density * density * z * z * z * LOG2);
+            fogFactor = clamp(fogFactor, 0.0, 1.0);
+            vec4 fogColor = vec4(0.0, 0.2, 1.0, 1.0);//1,0,1,1
+            fragColor = mix(fogColor, vec4(0.4, 0.0, 0.2, 1.0), fogFactor); //0,1,1,1
+        }
+    </script>
+    <canvas id="webgl-canvas"></canvas>
+<script type="text/javascript" src="Flowy.js"></script>
+
+</body>
+</html>
